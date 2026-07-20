@@ -108,25 +108,6 @@ async function runSeed() {
       tags: ['Aceites', 'Almacén', 'Oferta'],
     });
 
-    // Oportunidad 2: Abierta
-    const opp2 = opportunityRepository.create({
-      title: 'Queso Cremoso de Primera Calidad (Horma de 4kg apróx.)',
-      description: 'Horma de queso cremoso libre de gluten (sin TACC). Increíble textura y sabor especial para pizzas y tartas.',
-      imageUrl: 'https://images.unsplash.com/photo-1486887396153-fa416525c108?auto=format&fit=crop&w=800&q=80',
-      category: 'Lácteos',
-      unitPrice: 35.60,
-      wholesalePrice: 26.00,
-      discountPercentage: 27,
-      minimumUnits: 50,
-      committedUnits: 10,
-      activeMembers: 1,
-      status: OpportunityStatus.OPEN,
-      expiresAt: new Date(now.getTime() + 5 * 24 * 60 * 60 * 1000), // 5 días en el futuro
-      supplierId: uSupplier2.id,
-      supplierOrigin: 'Buenos Aires, Argentina',
-      tags: ['Quesos', 'Fresco', 'Lácteos'],
-    });
-
     // Oportunidad 3: Confirmada (Llegó a la meta)
     const opp3 = opportunityRepository.create({
       title: 'Harina de Trigo Favorita 000 1kg (Pack de 10 paquetes)',
@@ -165,9 +146,8 @@ async function runSeed() {
       tags: ['Leche', 'Desayuno', 'Larga Vida'],
     });
 
-    const [uOpp1, uOpp2, uOpp3, uOpp4] = await opportunityRepository.save([
+    const [uOpp1, uOpp3, uOpp4] = await opportunityRepository.save([
       opp1,
-      opp2,
       opp3,
       opp4,
     ]);
@@ -183,15 +163,6 @@ async function runSeed() {
       opportunityId: uOpp1.id,
       quantity: 45,
       totalAmount: 45 * Number(uOpp1.wholesalePrice),
-      status: AdhesionStatus.PENDING,
-    });
-
-    // Minorista 2 se adhiere a la Oportunidad 2 (Queso) - 10 unidades
-    const adh2 = adhesionRepository.create({
-      userId: uBuyer2.id,
-      opportunityId: uOpp2.id,
-      quantity: 10,
-      totalAmount: 10 * Number(uOpp2.wholesalePrice),
       status: AdhesionStatus.PENDING,
     });
 
@@ -223,9 +194,8 @@ async function runSeed() {
       cancellationReason: CancellationReason.OPPORTUNITY_EXPIRED,
     });
 
-    const [uAdh1, uAdh2, uAdh3, uAdh4, uAdh5] = await adhesionRepository.save([
+    const [uAdh1, uAdh3, uAdh4, uAdh5] = await adhesionRepository.save([
       adh1,
-      adh2,
       adh3,
       adh4,
       adh5,
